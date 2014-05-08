@@ -1,0 +1,7 @@
+public class CLASSNAME{
+
+    public RETURN_TYPE FUNC_NAME(PARAMETERS){
+     // write your code here
+  
+    }
+}

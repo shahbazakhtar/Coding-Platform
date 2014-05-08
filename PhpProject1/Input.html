@@ -1,0 +1,96 @@
+<html>
+<head>
+<title>Coding Platform</title>
+<script type='text/javascript'>
+        function addFields(){
+            // Number of inputs to create
+            var number = document.getElementById("member").value;
+            // Container <div> where dynamic content will be placed
+            var container = document.getElementById("container");
+            // Clear previous contents of the container
+            while (container.hasChildNodes()) {
+                container.removeChild(container.lastChild);
+            }
+            for (i=0;i<number;i++){
+                // Append a node with a random text
+                container.appendChild(document.createTextNode("Variable_name " + (i+1)));
+                // Create an <input> element, set its type and name attributes
+                var input = document.createElement("input");
+                input.type = "text";
+                input.name = "var_name" + i;
+                container.appendChild(input);
+                // Append a line break 
+                container.appendChild(document.createElement("br"));
+                
+                container.appendChild(document.createTextNode("dimensionality " + (i+1)));
+                // Create an <input> element, set its type and name attributes
+                var input = document.createElement("input");
+        
+                input.type = "text";
+                input.name = "dim" + i;
+                container.appendChild(input);
+                // Append a line break 
+                container.appendChild(document.createElement("br"));
+                
+                container.appendChild(document.createTextNode("Variable_type " + (i+1)));
+                // Create an <input> element, set its type and name attributes
+                var input = document.createElement("input");
+                input.type = "text";
+                input.name = "var_type" + i;
+                container.appendChild(input);
+                // Append a line break 
+                container.appendChild(document.createElement("br"));
+                
+                
+            }
+        }
+</script>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<form action="backend.php" method="post" enctype="application/x-www-form-urlencoded" name="input">
+		<table align="left" width="500">
+			<caption><strong><font size ="20" color ="brown">Input Parameters</font></strong></caption>
+			<tr>
+				<td colspan="1"></br></td>
+			</tr>
+			<tr>
+				<td> Name Of The Function:</td>
+				<td align="right"><input type="text" name="func_name">&nbsp;*</td>
+			</tr>
+			<tr>
+				<td> Return Type:</td>
+				<td align="right"><input type="text" name="return_type">&nbsp;*</td>
+			</tr>
+			<tr>
+				<td colspan="2"></br></td>
+			</tr>
+			<tr>
+				<td> Name Of The Class:</td>
+				<td align="right"><input type="text" name="class_name"></td>
+			</tr>
+			<tr>
+				<td colspan="2"></br></td>
+			</tr>
+			<tr>
+				<td>Number Of Input Arguments:</td>
+				<td align="right"><input type="text" id="member" name="no_of_arguments">
+				<a href="#" id="filldetails" onclick="addFields(this.value)">Ok</a></td>
+			</tr>
+			<tr>
+			<td><div id="container"></div></td>
+			</tr>
+			<tr>
+			    <td width="50%" align="right"></br>
+                <input name="Reset" value="Reset" type="reset" />
+                </td>
+                <td align="left"></br><input name="submit" value="submit" type="submit" />
+                </td>
+            </tr>
+            
+        </table>
+        
+	</form>
+	<?php
+	echo "hello";
+	?>
+</head>
+</html>
