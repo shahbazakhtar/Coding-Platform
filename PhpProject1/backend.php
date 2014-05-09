@@ -82,7 +82,7 @@
             public function setReturnType($type)
             {
 				$this->return_type=$type;
-	    }
+			}
 			/*
              * sets the string indicating parameters_type for each dimension like "*" or "[]" for 1 dimension and so on. 
              * 2-D array MapDimensions is used to map each dimension to several possibilities.
@@ -160,6 +160,8 @@
 					$str=$this->parameters_type[$i];
 					$str=strtolower($str);
 					$Map_parameters[$i]=$this->Map[$str];
+					$s=$Map_parameters[$i];
+					if((strncmp($s,'ArrayList',strlen('ArrayList'))!=0) && (strncmp($s,"Set&lt;Integer&gt;",strlen("Set&lt;Integer&gt;"))!=0))
 					$Map_parameters[$i]=$Map_parameters[$i].$string;
 				}
                 return $Map_parameters;
@@ -194,7 +196,7 @@
                {
 			     $str=explode(" ",$lines[$i]);
 			     $type=strtolower($str[0]);
-			     $tag=strtolower($str[1]);
+			     $tag=$str[1];
 			     $this->Map[$type]=$tag;
 		       }
 			}
@@ -226,6 +228,10 @@
                 return $code;
             }
           
+            public function sendSuggestions()
+            {
+				
+			}
         }
         /*
          * Main class of the project
