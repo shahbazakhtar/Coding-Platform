@@ -2,81 +2,188 @@
 <head>
 <title>Coding Platform</title>
 <script type='text/javascript'>
-        function addFields(){
-            // Number of inputs to create
-            var number = document.getElementById("member").value;
-            // Container <div> where dynamic content will be placed
-            var container = document.getElementById("container");
-            // Clear previous contents of the container
-            while (container.hasChildNodes()) {
-                container.removeChild(container.lastChild);
+        function generate()
+        {
+			var container = document.getElementById("container");
+			var html="";
+			var number = input.no_of_arguments.value;
+			var common='<tr><td colspan="2"></br></td></tr>';
+			for(i=0;i<number;i++)
+			{
+				html+=common;
+				html+='<tr><td>Variable_name'+(i+1)+':</td> <td ><input type="text" name="var_name'+i+'"></td></tr>';
+				html+=common;
+				html+='<tr><td>Dimensionality'+(i+1)+':</td> <td ><select id="select'+i+'" name="dim'+i+'"><option value="select">-Select Dimensions-</option><option value="0">0</option><option value="1">1</option><option value="2">2</option></select></td></tr>';
+				html+=common;
+				html+='<tr><td>Variable_type'+(i+1)+':</td> <td ><input type="text" name="var_type'+i+'" onkeyup="displaysuggestion(this.value,'+i+')"><div id="livesearch'+i+'"></div></td></tr>';
+			}
+			container.innerHTML=html;
+		}
+		function displaysuggestion(str,id)
+		{
+			 if (str.length==0) { 
+             document.getElementById("livesearch"+id).innerHTML="";
+             document.getElementById("livesearch"+id).style.border="0px";
+             return;
+             }
+             else
+             {
+				 document.getElementById("livesearch"+id).innerHTML="hello";
+			 }
+             if (window.XMLHttpRequest) {
+           // code for IE7+, Firefox, Chrome, Opera, Safari
+             xmlhttp=new XMLHttpRequest();
+             } else {  // code for IE6, IE5
+             xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
             }
-            for (i=0;i<number;i++){
-                // Append a node with a random text
-                container.appendChild(document.createTextNode("Variable_name " + (i+1)));
-                // Create an <input> element, set its type and name attributes
-                var input = document.createElement("input");
-                input.type = "text";
-                input.name = "var_name" + i;
-                container.appendChild(input);
-                // Append a line break 
-                container.appendChild(document.createElement("br"));
-                
-                container.appendChild(document.createTextNode("dimensionality " + (i+1)));
-                // Create an <input> element, set its type and name attributes
-                var input = document.createElement("input");
-        
-                input.type = "text";
-                input.name = "dim" + i;
-                container.appendChild(input);
-                // Append a line break 
-                container.appendChild(document.createElement("br"));
-                
-                container.appendChild(document.createTextNode("Variable_type " + (i+1)));
-                // Create an <input> element, set its type and name attributes
-                var input = document.createElement("input");
-                input.type = "text";
-                input.name = "var_type" + i;
-                container.appendChild(input);
-                // Append a line break 
-                container.appendChild(document.createElement("br"));
-                
-                
+            xmlhttp.onreadystatechange=function() {
+            if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+            document.getElementById("livesearch"+id).innerHTML=xmlhttp.responseText;
+            document.getElementById("livesearch"+id).style.border="1px solid #A5ACB2";
             }
-        }
+            }
+            xmlhttp.open("POST","livesearch.php",true);
+            xmlhttp.send();
+		}
+		function func()
+		{
+			var val= document.getElementById("select").value;
+			var common='<tr><td colspan="2"></br></td></tr>';
+			var html="";
+			if(val=='Java')
+			{
+				html+=common;
+				html+='<tr><td>Name Of The Class:</td> <td ><input type="text" name="class_name"></td></tr>';
+				var container = document.getElementById("CLASS");
+				container.innerHTML=html;
+		    }
+		    if(val!='Java')
+			{
+				var html='';
+				var container = document.getElementById("CLASS");
+				container.innerHTML=html;
+		    }	
+		}
+		function validate_form()
+		{
+			 var val=document.forms['input']['lang'].value;
+			 if(val=='select')
+			 {
+				alert("Please Select Language First");
+				return false;
+			 }
+			 var val=document.forms["input"]["func_name"].value;
+			 if(val=="")
+			 {
+				 alert("Function name can never be blank");
+				 return false;
+			 }
+			 var val=document.forms['input']['return_type'].value;
+			 if(val=="")
+			 {
+				alert("Return type can never be blank");
+				return false;
+			 }
+			 val=val.toLowerCase();
+			 if(val=="integer")
+			 {
+				document.forms['input']['return_type'].value="int"; 
+			 }
+			 if(val=="character")
+			 {
+				document.forms['input']['return_type'].value="char"; 
+			 }
+			 if(val=="integer pointer")
+			 {
+				document.forms['input']['return_type'].value="int*"; 
+			 }
+			 if(val=="character pointer")
+			 {
+				document.forms['input']['return_type'].value="char*"; 
+			 }
+			 var val=document.forms['input']['no_of_arguments'].value;
+			 for(i=0;i<val;i++)
+			 {
+				var val1=document.forms['input']['var_name'+i].value;
+				if(val1=="")
+			    {
+				alert("Please enter the name of variable"+(i+1));
+				return false;
+			    }
+			    var val1=document.forms['input']['dim'+i].value;
+				if(val1=="select")
+			    {
+				alert("Please select the dimension of variable"+(i+1));
+				return false;
+			    }
+			    var val1=document.forms['input']['var_type'+i].value;
+				if(val1=="")
+			    {
+				alert("Please enter the type of variable"+(i+1));
+				return false;
+			    }
+			    val1=val1.toLowerCase();
+			    if(val1=="int")
+			    {
+				document.forms['input']['var_type'+i].value="integer";
+			    }
+			    if(val1=="char")
+			    {
+				document.forms['input']['var_type'+i].value="character";
+			    }
+			    if(val1!="integer"&&val1!="int"&&val1!="character"&&val1!="char")
+			    {
+				alert("Sorry !!! The type of variable"+(i+1)+" can only be integer or character");
+				return false;
+			    }
+				
+			 }
+		}
 </script>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-	<form action="backend.php" method="post" enctype="application/x-www-form-urlencoded" name="input">
-		<table align="left" width="500">
-			<caption><strong><font size ="20" color ="brown">Input Parameters</font></strong></caption>
+	<form action="backend.php" method="post" enctype="application/x-www-form-urlencoded" name="input" onsubmit="return validate_form()">
+		<table align="left" width="500" id="myTable">
+			<caption><strong><font size ="10" color ="brown">Input Parameters</font></strong></caption>
 			<tr>
-				<td colspan="1"></br></td>
+				<td colspan="2"></br></td>
 			</tr>
 			<tr>
-				<td> Name Of The Function:</td>
-				<td align="right"><input type="text" name="func_name">&nbsp;*</td>
-			</tr>
-			<tr>
-				<td> Return Type:</td>
-				<td align="right"><input type="text" name="return_type">&nbsp;*</td>
+				<td>Select Your language:</td>
+				<td>
+					<select name="lang" id="select" onchange="func()">
+						<option value="select">-Select language-</option>
+						<option value="C">C</option>
+						<option value="Java">Java</option>
+					</select>
+				</td>
 			</tr>
 			<tr>
 				<td colspan="2"></br></td>
 			</tr>
 			<tr>
-				<td> Name Of The Class:</td>
-				<td align="right"><input type="text" name="class_name"></td>
+				<td> Name Of The Function:</td>
+				<td ><input type="text" name="func_name">&nbsp;*</td>
 			</tr>
+			<tr>
+				<td colspan="2"></br></td>
+			</tr>
+			<tr>
+				<td> Return Type:</td>
+				<td ><input type="text" name="return_type">&nbsp;*</td>
+			</tr>
+			<tbody id="CLASS">
+            </tbody>
 			<tr>
 				<td colspan="2"></br></td>
 			</tr>
 			<tr>
 				<td>Number Of Input Arguments:</td>
-				<td align="right"><input type="text" id="member" name="no_of_arguments">
-				<a href="#" id="filldetails" onclick="addFields(this.value)">Ok</a></td>
+				<td ><input type="text" id="member" name="no_of_arguments" onkeyup="generate()"></td>
 			</tr>
+			<tbody id="container">
+            </tbody>
 			<tr>
-			<td><div id="container"></div></td>
+				<td colspan="2"></br></td>
 			</tr>
 			<tr>
 			    <td width="50%" align="right"></br>
@@ -85,12 +192,7 @@
                 <td align="left"></br><input name="submit" value="submit" type="submit" />
                 </td>
             </tr>
-            
-        </table>
-        
+        </table> 
 	</form>
-	<?php
-	echo "hello";
-	?>
 </head>
 </html>
