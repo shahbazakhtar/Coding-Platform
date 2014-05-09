@@ -62,11 +62,11 @@
 		/*
 		 sets the value of the variable_type in the textfield using the suggestion selected by the user
 		*/
-		
+
 		function setData(val,id)
 		{
 	            document.forms['input']['var_type'+id].value=val;
-			
+
 		}
 		/*
 		  generates the textfield of the name of class when java language is selected
@@ -96,7 +96,7 @@
 		 the function validates the form feilds and checks for blank feilds
 		 and alert the user.
 		*/
-		
+
 		function validate_form()
 		{
 			 var val=document.forms['input']['lang'].value;
@@ -117,46 +117,34 @@
 				alert("Select Return type");
 				return false;
 			 }
+			 var lang=document.forms['input']['lang'].value;
+			 if(lang=="Java")
+			 {
 			 var val=document.forms['input']['class_name'].value;
 			 if(val=="")
 			 {
 				alert("class name can never be blank");
 				return false;
 			 }
-			 val=val.toLowerCase();
-			 if(val=="integer")
-			 {
-				document.forms['input']['return_type'].value="int"; 
-			 }
-			 if(val=="character")
-			 {
-				document.forms['input']['return_type'].value="char"; 
-			 }
-			 if(val=="integer pointer")
-			 {
-				document.forms['input']['return_type'].value="int*"; 
-			 }
-			 if(val=="character pointer")
-			 {
-				document.forms['input']['return_type'].value="char*"; 
-			 }
-			 var val=document.forms['input']['no_of_arguments'].value;
+	                 }
+			 var val=document.forms['input']['no_of_arguments'].value; 
 			 for(i=0;i<val;i++)
 			 {
+				
 				var val1=document.forms['input']['var_name'+i].value;
-				if(val1=="")
+			    if(val1=="")
 			    {
 				alert("Please enter the name of variable"+(i+1));
 				return false;
 			    }
 			    var val1=document.forms['input']['dim'+i].value;
-				if(val1=="select")
+			    if(val1=="select")
 			    {
 				alert("Please select the dimension of variable"+(i+1));
 				return false;
 			    }
 			    var val1=document.forms['input']['var_type'+i].value;
-				if(val1=="")
+			    if(val1=="")
 			    {
 				alert("Please enter the type of variable"+(i+1));
 				return false;
@@ -181,23 +169,23 @@
 				  document.forms['input']['var_name'+i].value=document.forms['input']['var_name'+i].value+'[]';
 				  val1="integer";
 				  document.forms['input']['dim'+i].value=0;		
-				}
-				if(val1=="int*"||val1=="int**")
+			    }
+			    if(val1=="int*"||val1=="int**")
 			    {
 				  document.forms['input']['var_type'+i].value="integer";
 				  val1="integer";		
-				}
-				if(val1=="int[]"&&lang=="Java")
+			    }
+			    if(val1=="int[]"&&lang=="Java")
 			    {
 				  document.forms['input']['var_type'+i].value="integer";
 				  val1="integer";	
-				}
+			    }
 			    if(val1!="integer"&&val1!="int"&&val1!="character"&&val1!="char"&&val1!="ArrayList"&&val1!="Set<Integer>")
 			    {
 				alert("Sorry !!! The type of variable"+(i+1)+" can only be integer or character");
 				return false;
 			    }
-				
+
 			 }
 		}
 </script>
