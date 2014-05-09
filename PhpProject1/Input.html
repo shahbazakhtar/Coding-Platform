@@ -22,14 +22,14 @@
 		function displaysuggestion(str,id)
 		{
 			 if (str.length==0) { 
-                     document.getElementById("livesearch"+id).innerHTML="";
-                     document.getElementById("livesearch"+id).style.border="0px";
-                    return;
-                     }
+             document.getElementById("livesearch"+id).innerHTML="";
+             document.getElementById("livesearch"+id).style.border="0px";
+             return;
+             }
              else
              {
-		document.getElementById("livesearch"+id).innerHTML="hello";
-	     }
+				 document.getElementById("livesearch"+id).innerHTML="hello";
+			 }
              if (window.XMLHttpRequest) {
            // code for IE7+, Firefox, Chrome, Opera, Safari
              xmlhttp=new XMLHttpRequest();
@@ -44,7 +44,7 @@
             var dim=document.forms['input']['dim'+id].value;
             var type=document.forms['input']['var_type'+id].value;
             var lang=document.forms['input']['lang'].value;
-            xmlhttp.send("name="+name+"&dim="+dim+"&str="+str+"&type="+type+"&lang="+lang);		// calls the send() method with datas as parameter
+            xmlhttp.send("name="+name+"&dim="+dim+"&str="+str+"&type="+type+"&lang="+lang+"&id="+id);		// calls the send() method with datas as parameter
             
             xmlhttp.onreadystatechange=function() {
             if (xmlhttp.readyState==4 && xmlhttp.status==200) {
@@ -52,6 +52,11 @@
             document.getElementById("livesearch"+id).style.border="1px solid #A5ACB2";
             }
             }
+		}
+		function setData(val,id)
+		{
+			document.forms['input']['var_type'+id].value=val;
+			
 		}
 		function func()
 		{
@@ -64,9 +69,9 @@
 				html+='<tr><td>Name Of The Class:</td> <td ><input type="text" name="class_name"></td></tr>';
 				var container = document.getElementById("CLASS");
 				container.innerHTML=html;
-		        }
+		    }
 		    if(val!='Java')
-		    {
+			{
 				var html='';
 				var container = document.getElementById("CLASS");
 				container.innerHTML=html;
@@ -130,7 +135,6 @@
 				alert("Please enter the type of variable"+(i+1));
 				return false;
 			    }
-			    val1=val1.toLowerCase();
 			    if(val1=="int")
 			    {
 				document.forms['input']['var_type'+i].value="integer";
@@ -139,7 +143,29 @@
 			    {
 				document.forms['input']['var_type'+i].value="character";
 			    }
-			    if(val1!="integer"&&val1!="int"&&val1!="character"&&val1!="char")
+			    lang=document.forms['input']['lang'].value
+			    if(val1=="int[][]")
+			    {
+			     document.forms['input']['var_type'+i].value="integer";
+			     val1="integer";
+			    }
+			    if(val1=="int[]"&&lang=="C")
+			    {
+				  document.forms['input']['var_type'+i].value="integer";
+				  document.forms['input']['var_name'+i].value=document.forms['input']['var_name'+i].value+'[]';
+				  val1="integer";		
+				}
+				if(val1=="int*"||val1=="int**")
+			    {
+				  document.forms['input']['var_type'+i].value="integer";
+				  val1="integer";		
+				}
+				if(val1=="int[]"&&lang=="Java")
+			    {
+				  document.forms['input']['var_type'+i].value="integer";
+				  val1="integer";	
+				}
+			    if(val1!="integer"&&val1!="int"&&val1!="character"&&val1!="char"&&val1!="ArrayList"&&val1!="Set<Integer>")
 			    {
 				alert("Sorry !!! The type of variable"+(i+1)+" can only be integer or character");
 				return false;
