@@ -38,14 +38,14 @@
 		        document.getElementById("livesearch"+id).innerHTML="hello";
 		       }
                    if (window.XMLHttpRequest) {
-           // code for IE7+, Firefox, Chrome, Opera, Safari
+                  // code for IE7+, Firefox, Chrome, Opera, Safari
                     xmlhttp=new XMLHttpRequest();
                    } else {  // code for IE6, IE5
                     xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
                    }
             
                    xmlhttp.open("POST","livesearch.php",true);
-            // adds  a header to tell the PHP script to recognize the data as is sent via POST
+                   // adds  a header to tell the PHP script to recognize the data as is sent via POST
                    xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
                    var name=document.forms['input']['var_name'+id].value;
                    var dim=document.forms['input']['dim'+id].value;
@@ -117,6 +117,12 @@
 				alert("Select Return type");
 				return false;
 			 }
+			 var val=document.forms['input']['class_name'].value;
+			 if(val=="")
+			 {
+				alert("class name can never be blank");
+				return false;
+			 }
 			 val=val.toLowerCase();
 			 if(val=="integer")
 			 {
@@ -138,19 +144,19 @@
 			 for(i=0;i<val;i++)
 			 {
 				var val1=document.forms['input']['var_name'+i].value;
-			    if(val1=="")
+				if(val1=="")
 			    {
 				alert("Please enter the name of variable"+(i+1));
 				return false;
 			    }
 			    var val1=document.forms['input']['dim'+i].value;
-			    if(val1=="select")
+				if(val1=="select")
 			    {
 				alert("Please select the dimension of variable"+(i+1));
 				return false;
 			    }
 			    var val1=document.forms['input']['var_type'+i].value;
-			    if(val1=="")
+				if(val1=="")
 			    {
 				alert("Please enter the type of variable"+(i+1));
 				return false;
@@ -175,17 +181,17 @@
 				  document.forms['input']['var_name'+i].value=document.forms['input']['var_name'+i].value+'[]';
 				  val1="integer";
 				  document.forms['input']['dim'+i].value=0;		
-			    }
-			    if(val1=="int*"||val1=="int**")
+				}
+				if(val1=="int*"||val1=="int**")
 			    {
 				  document.forms['input']['var_type'+i].value="integer";
 				  val1="integer";		
-			    }
-			    if(val1=="int[]"&&lang=="Java")
+				}
+				if(val1=="int[]"&&lang=="Java")
 			    {
 				  document.forms['input']['var_type'+i].value="integer";
 				  val1="integer";	
-			    }
+				}
 			    if(val1!="integer"&&val1!="int"&&val1!="character"&&val1!="char"&&val1!="ArrayList"&&val1!="Set<Integer>")
 			    {
 				alert("Sorry !!! The type of variable"+(i+1)+" can only be integer or character");
