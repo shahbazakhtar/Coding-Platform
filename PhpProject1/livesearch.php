@@ -7,8 +7,6 @@ $lang=$_POST['lang'];
 $type=strtolower($type);
 $hint="";
 if (strlen($q)>0) {
-	if($dim==1)
-	{
 		if($lang=="C")
 		{
 		if($dim==1)
@@ -19,7 +17,6 @@ if (strlen($q)>0) {
 		}
 		if($dim==2)
 		{
-			echo $dim;
 			$hint.='int** '.$name;
 		}
 	    }
@@ -39,8 +36,7 @@ if (strlen($q)>0) {
 		    }
 		}
 		
-	}
-} 
+	} 
 if ($hint=="") {
   $response="no suggestion";
 } else {
