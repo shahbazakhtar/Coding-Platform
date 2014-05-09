@@ -22,28 +22,36 @@
 		function displaysuggestion(str,id)
 		{
 			 if (str.length==0) { 
-             document.getElementById("livesearch"+id).innerHTML="";
-             document.getElementById("livesearch"+id).style.border="0px";
-             return;
-             }
+                     document.getElementById("livesearch"+id).innerHTML="";
+                     document.getElementById("livesearch"+id).style.border="0px";
+                    return;
+                     }
              else
              {
-				 document.getElementById("livesearch"+id).innerHTML="hello";
-			 }
+		document.getElementById("livesearch"+id).innerHTML="hello";
+	     }
              if (window.XMLHttpRequest) {
            // code for IE7+, Firefox, Chrome, Opera, Safari
              xmlhttp=new XMLHttpRequest();
              } else {  // code for IE6, IE5
              xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
             }
+            
+            xmlhttp.open("POST","livesearch.php",true);
+            // adds  a header to tell the PHP script to recognize the data as is sent via POST
+            xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            var name=document.forms['input']['var_name'+id].value;
+            var dim=document.forms['input']['dim'+id].value;
+            var type=document.forms['input']['var_type'+id].value;
+            var lang=document.forms['input']['lang'].value;
+            xmlhttp.send("name="+name+"&dim="+dim+"&str="+str+"&type="+type+"&lang="+lang);		// calls the send() method with datas as parameter
+            
             xmlhttp.onreadystatechange=function() {
             if (xmlhttp.readyState==4 && xmlhttp.status==200) {
             document.getElementById("livesearch"+id).innerHTML=xmlhttp.responseText;
             document.getElementById("livesearch"+id).style.border="1px solid #A5ACB2";
             }
             }
-            xmlhttp.open("POST","livesearch.php",true);
-            xmlhttp.send();
 		}
 		function func()
 		{
@@ -56,9 +64,9 @@
 				html+='<tr><td>Name Of The Class:</td> <td ><input type="text" name="class_name"></td></tr>';
 				var container = document.getElementById("CLASS");
 				container.innerHTML=html;
-		    }
+		        }
 		    if(val!='Java')
-			{
+		    {
 				var html='';
 				var container = document.getElementById("CLASS");
 				container.innerHTML=html;
