@@ -1,28 +1,46 @@
 <?php
-$xmlDoc=new DOMDocument();
-$xmlDoc->load("links.xml");
-
-$x=$xmlDoc->getElementsByTagName('data');
-
-//get the q parameter from URL
-$q=$_POST[''];
+$name=$_POST["name"];
+$q=$_POST['str'];
+$dim=$_POST['dim'];
+$type=$_POST['type'];
+$lang=$_POST['lang'];
+$type=strtolower($type);
+$hint="";
 if (strlen($q)>0) {
-  $hint="";
-  for($i=0; $i<($x->length); $i++) {
-    $y=$x->item($i)->getElementsByTagName('type');
-    $z=$x->item($i)->getElementsByTagName('suggestion');
-    if ($y->item(0)->nodeType==1) {
-      //find a link matching the search text
-      if (stristr($y->item(0)->childNodes->item(0)->nodeValue,$q)) {
-        if ($hint=="") {
-          $hint=$z->item(0)->childNodes->item(0)->nodeValue;
-        } else {
-          $hint=$hint . "<br />".$z->item(0)->childNodes->item(0)->nodeValue ;
-        }
-      }
-    }
-  }
-}
+	if($dim==1)
+	{
+		if($lang=="C")
+		{
+		if($dim==1)
+		{
+			$hint.='int* '.$name;
+			$hint.='<br>';
+			$hint.='int '.$name.'[]';
+		}
+		if($dim==2)
+		{
+			echo $dim;
+			$hint.='int** '.$name;
+		}
+	    }
+	    if($lang=="Java")
+	    {
+			if($dim==1)
+		    {
+			$hint.='int[] '.$name;
+			$hint.='<br>';
+			$hint.='ArrayList '.$name;
+			$hint.='<br>';
+			$hint.='Set<Integer> '.$name;
+		    }
+		    if($dim==2)
+		    {
+			$hint.='int[][] '.$name;
+		    }
+		}
+		
+	}
+} 
 if ($hint=="") {
   $response="no suggestion";
 } else {
