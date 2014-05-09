@@ -2,8 +2,12 @@
 <head>
 <title>Coding Platform</title>
 <script type='text/javascript'>
-        function generate()
-        {
+	   /**
+	    this function dynamically generates the fields for variable_name,variable_type,dimension
+	    using the value of no_of_arguments  field
+	   */
+                 function generate()
+                 {
 			var container = document.getElementById("container");
 			var html="";
 			var number = input.no_of_arguments.value;
@@ -19,44 +23,55 @@
 			}
 			container.innerHTML=html;
 		}
+		/*
+		 displaysuggestion of variable_type depending on the value of dimension of variables
+		*/
 		function displaysuggestion(str,id)
 		{
 			 if (str.length==0) { 
-             document.getElementById("livesearch"+id).innerHTML="";
-             document.getElementById("livesearch"+id).style.border="0px";
-             return;
-             }
-             else
-             {
-				 document.getElementById("livesearch"+id).innerHTML="hello";
-			 }
-             if (window.XMLHttpRequest) {
+                          document.getElementById("livesearch"+id).innerHTML="";
+                          document.getElementById("livesearch"+id).style.border="0px";
+                          return;
+                        }
+                        else
+                       {
+		        document.getElementById("livesearch"+id).innerHTML="hello";
+		       }
+                   if (window.XMLHttpRequest) {
            // code for IE7+, Firefox, Chrome, Opera, Safari
-             xmlhttp=new XMLHttpRequest();
-             } else {  // code for IE6, IE5
-             xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-            }
+                    xmlhttp=new XMLHttpRequest();
+                   } else {  // code for IE6, IE5
+                    xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+                   }
             
-            xmlhttp.open("POST","livesearch.php",true);
+                   xmlhttp.open("POST","livesearch.php",true);
             // adds  a header to tell the PHP script to recognize the data as is sent via POST
-            xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-            var name=document.forms['input']['var_name'+id].value;
-            var dim=document.forms['input']['dim'+id].value;
-            var type=document.forms['input']['var_type'+id].value;
-            var lang=document.forms['input']['lang'].value;
-            xmlhttp.send("name="+name+"&dim="+dim+"&str="+str+"&type="+type+"&lang="+lang+"&id="+id);		// calls the send() method with datas as parameter
+                   xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                   var name=document.forms['input']['var_name'+id].value;
+                   var dim=document.forms['input']['dim'+id].value;
+                   var type=document.forms['input']['var_type'+id].value;
+                   var lang=document.forms['input']['lang'].value;
+                   xmlhttp.send("name="+name+"&dim="+dim+"&str="+str+"&type="+type+"&lang="+lang+"&id="+id);		// calls the send() method with datas as parameter
             
-            xmlhttp.onreadystatechange=function() {
-            if (xmlhttp.readyState==4 && xmlhttp.status==200) {
-            document.getElementById("livesearch"+id).innerHTML=xmlhttp.responseText;
-            }
-            }
+                    xmlhttp.onreadystatechange=function() {
+                     if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+                    document.getElementById("livesearch"+id).innerHTML=xmlhttp.responseText;
+                    }
+                    }
 		}
+		/*
+		 sets the value of the variable_type in the textfield using the suggestion selected by the user
+		*/
+		
 		function setData(val,id)
 		{
-			document.forms['input']['var_type'+id].value=val;
+	            document.forms['input']['var_type'+id].value=val;
 			
 		}
+		/*
+		  generates the textfield of the name of class when java language is selected
+		  the function is called by onchange event on the language list
+		*/
 		function func()
 		{
 			var val= document.getElementById("select").value;
@@ -68,14 +83,20 @@
 				html+='<tr><td>Name Of The Class:</td> <td ><input type="text" name="class_name">&nbsp;*</td></tr>';
 				var container = document.getElementById("CLASS");
 				container.innerHTML=html;
-		    }
-		    if(val!='Java')
+		        }
+		        if(val!='Java')
 			{
 				var html='';
 				var container = document.getElementById("CLASS");
 				container.innerHTML=html;
-		    }	
+		        }	
 		}
+		/*
+		 this function is called when the form value is submitted
+		 the function validates the form feilds and checks for blank feilds
+		 and alert the user.
+		*/
+		
 		function validate_form()
 		{
 			 var val=document.forms['input']['lang'].value;
@@ -117,19 +138,19 @@
 			 for(i=0;i<val;i++)
 			 {
 				var val1=document.forms['input']['var_name'+i].value;
-				if(val1=="")
+			    if(val1=="")
 			    {
 				alert("Please enter the name of variable"+(i+1));
 				return false;
 			    }
 			    var val1=document.forms['input']['dim'+i].value;
-				if(val1=="select")
+			    if(val1=="select")
 			    {
 				alert("Please select the dimension of variable"+(i+1));
 				return false;
 			    }
 			    var val1=document.forms['input']['var_type'+i].value;
-				if(val1=="")
+			    if(val1=="")
 			    {
 				alert("Please enter the type of variable"+(i+1));
 				return false;
@@ -154,17 +175,17 @@
 				  document.forms['input']['var_name'+i].value=document.forms['input']['var_name'+i].value+'[]';
 				  val1="integer";
 				  document.forms['input']['dim'+i].value=0;		
-				}
-				if(val1=="int*"||val1=="int**")
+			    }
+			    if(val1=="int*"||val1=="int**")
 			    {
 				  document.forms['input']['var_type'+i].value="integer";
 				  val1="integer";		
-				}
-				if(val1=="int[]"&&lang=="Java")
+			    }
+			    if(val1=="int[]"&&lang=="Java")
 			    {
 				  document.forms['input']['var_type'+i].value="integer";
 				  val1="integer";	
-				}
+			    }
 			    if(val1!="integer"&&val1!="int"&&val1!="character"&&val1!="char"&&val1!="ArrayList"&&val1!="Set<Integer>")
 			    {
 				alert("Sorry !!! The type of variable"+(i+1)+" can only be integer or character");
