@@ -227,11 +227,6 @@
                 $code=str_replace("PARAMETERS",$final_string,$code);
                 return $code;
             }
-          
-            public function sendSuggestions()
-            {
-				
-			}
         }
         /*
          * Main class of the project
@@ -247,6 +242,8 @@
 		 * Finally echoes the modified code.
 		 * */
 		public function load()
+		{
+		if(isset($_POST['submit']))
 		{
 		$lang_name=$_POST['lang'];
         $lang=new Language($lang_name);
@@ -284,6 +281,66 @@
         $code=$lang->generateSourceCode();
         echo $code;
 	    }
+	    else $this->sendSuggestions();
+	    }
+	    /*
+	 * function that send the suggestion to the frontend using the value of the dimension the variable,language
+	 * send by the POST method by the front-end.echoes the suggestion by creating the drop-down list 
+      
+     * */
+	public function sendSuggestions()
+	{
+	 /* few variable that stores the value send by input.html through post method
+      * stores the name of the arguments,its dimensions for which we have to display suggestions
+      */
+     $name=$_POST["name"];
+     $q=$_POST['str'];
+     $dim=$_POST['dim'];
+     $type=$_POST['type'];
+     $lang=$_POST['lang'];
+     $id=$_POST['id'];
+     $type=strtolower($type);
+     //if length of typed string is greater tha zero
+      if(strlen($q)>0){
+		if($lang=="C")
+		{
+		if($dim==1)
+		{
+			echo '<select name="dropdown" onchange="setData(this.value,'.$id.')">
+			      <option value="">-- Select --</option>
+                  <option value="int*">int* '.$name.' </option>
+                  <option value="int[]">int '.$name. '[]</option>
+                  </select>';
+		}
+		if($dim==2)
+		{
+			echo '<select name="dropdown" onchange="setData(this.value,'.$id.')">
+			      <option value="">-- Select --</option>
+                  <option value="int**">int** '.$name.' </option>
+                  </select>';
+		}
+	    }
+	    if($lang=="Java")
+	    {
+			if($dim==1)
+		    {
+			echo '<select name="dropdown" onchange="setData(this.value,'.$id.')">
+			      <option value="">-- Select --</option>
+                  <option value="int[]">int[] '.$name.' </option>
+                  <option value="ArrayList">ArrayList '.$name. '</option>
+                  <option value="Set&lt;Integer&gt;">Set&ltInteger&gt '.$name. '</option>
+                  </select>';
+		    }
+		    if($dim==2)
+		    {
+			echo '<select name="dropdown" onchange="setData(this.value,'.$id.')">
+			      <option value="">-- Select --</option>
+                  <option value="int[][]">int[][] '.$name.' </option>
+                  </select>';
+		    }
+		}	
+      }
+     }
 	    }
 	    /*
 	     * Main class object to call the load() method;
