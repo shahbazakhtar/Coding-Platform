@@ -6,7 +6,13 @@
     </head>
     <body>
         <?php
-        class DefaultCode
+        /**
+         * Sourcecode class binds information about the sourcecode i.e. about class_name,
+         * function_name,return_type,parameters_name,parameters_type,dimensions of each parameters passed
+         * 0 dim-for simple integer or char,1 dim for 1-D array,2 dim for 2-D array;
+         * 
+         **/
+        class SourceCode
         {
             public $parameters_type=array();
             public $parameters_name=array();
@@ -18,35 +24,69 @@
             public $Map=array();
             public $MapDimensions=array(array());
             
+            /*
+             * sets the default code for any language that is taken through a file "lang_name.txt"
+             * @param $code ---a string of default code taken through a file "language_name.txt" 
+             * */
+             
             public function setDefaultCode($code)
             {
                 $this->default_code=$code;
             }
+            /*
+             * sets the type of parameters passed to a function by the content_provider
+             * @param $type --- an array containing info about the type of each parameters whether it is integer,character or other.
+             * */
             public function setParametersType($type)
             {
                 $this->parameters_type=$type;
             }
+            /*
+             * sets the name of parameters passed to a function by the content_provider
+             * @param $name--- an array containing name of each parameters.
+             * */
             public function setParametersName($name)
             {
                 $this->parameters_name=$name;
             }
+            /*
+             * sets the dimensions of each parameters passed to a function by the content_provider
+             * @param $dimension --- an array containing info about the dimension of each parameters whether it is 0(integer),1(1-D array) or 2(2-D array).
+             * */
             public function setDimensionOfVariables($dimension)
             {
                 $this->dimensions=$dimension;
             }
-            
+            /*
+             * sets the name of a function given by the content_provider
+             * @param $name --- a string indicating name .
+             * */
             public function setFunctionName($name)
             {
                 $this->function_name=$name;
             }
+             /*
+             * sets the name of a class given by the content_provider
+             * @param $name --- a string indicating name .
+             * */
+             
             public function setClassName($name)
             {
                 $this->class_name=$name;
             }
+            /*
+             * sets the return_type of a function given by the content_provider
+             * @param $type--- a string indicating return_type of function - int,char,etc;
+             * */
+            
             public function setReturnType($type)
             {
 				$this->return_type=$type;
-			}
+	    }
+			/*
+             * sets the string indicating parameters_type for each dimension like "*" or "[]" for 1 dimension and so on. 
+             * 2-D array MapDimensions is used to map each dimension to several possibilities.
+             * */
 			public function mapDimensions()
 			{
 				if($this->name=="C"||$this->name=="C++")
@@ -66,26 +106,50 @@
 				}
 				
 			}
-            public function getDefaultCode($default_code)
+			/*
+             * method to get the default code for any language that is taken through a file "lang_name.txt"
+             * */
+            public function getDefaultCode()
             {
                 return $this->default_code;
             }
+            /*
+             * method to get the return_type of the function given by the content provider
+             * */
             public function getReturnType()
             {
                 return $this->return_type;
             }
+            /*
+             * method to get the Classname given by the content provider
+             * */
             public function getClassName()
             {
                 return $this->class_name;
             }
+            /*
+             * method to get the functionname given by the content provider
+             * */
             public function getFunctionName()
             {
                 return $this->function_name;
             }
+            /*
+             * method to get the name of each and every parameters given by the content provider.
+             * returns an array
+             * */
             public function getParameterNames()
             {
                 return $this->parameters_name;
             }
+            
+             /*
+             * method to get the type of each and every parameters given by the content provider.
+             * Each parameter_type is mapped to its default_type like Integer is mapped to int,Character to char
+             * Also dimensions of parameters are taken care of like to 1-D param is mapped to int* not to just int
+             * returns an array.
+             * */
+             
             public function getParameterTypes()
             {
 				$Map_parameters=array();
@@ -101,12 +165,28 @@
                 return $Map_parameters;
             }
         }
-        class Language extends DefaultCode
+        /*
+         * Language class extends the features of SourceCode class
+         * */
+        class Language extends SourceCode
         {
             public $name;
+            /*
+             * constructor to set the name of a language of which source we want to generate;
+             * */
+             
             public function __construct($name) {
                 $this->name=$name;
             }
+            
+            /*
+             * method to tag parameters_type to its original type in a language.
+             * like Integer to int or Characters to char
+             * supports extensibility to any data_type in future.
+             * @param $Myfile-- filename where the tagger of each types are stored.
+             * Types and its tag must be separated by a space(" ") in the file
+             * sets the associative_array[Type]=tag 
+             * */
             public function setinitialTag($MyFile)
             {
 			   $lines=file($MyFile);
@@ -118,6 +198,13 @@
 			     $this->Map[$type]=$tag;
 		       }
 			}
+			
+			/*
+             * method that replaces the string like CLASSNAME in default_code by 'class_name' given by the content_provider,
+             * RETURN_TYPE by 'return_type' of the function and so on.
+             * @return the sourcecode after replacement
+             * */
+             
             public function generateSourceCode()
             {
                 $parameter_type=$this->getParameterTypes();
@@ -138,18 +225,26 @@
                 $code=str_replace("PARAMETERS",$final_string,$code);
                 return $code;
             }
-            
-            public function sendSuggestions()
-            {
-				
-			}
+          
         }
+        /*
+         * Main class of the project
+         * 
+         * */
         class Main
         {
+			
+		/*
+		 * creates the Language class object and stores the default code in a string 'code'.
+		 * Take all the values from the form by $_POST method and sets the value for class_name,function_name,parameters_type of
+		 * the language object by calling their methods.
+		 * Finally echoes the modified code.
+		 * */
 		public function load()
 		{
-        $lang=new Language("Java");
-        $File=$lang->name."Tagger.txt";
+		$lang_name=$_POST['lang'];
+        $lang=new Language($lang_name);
+        $File=$lang_name."Tagger.txt";
         $lang->setinitialTag($File);
         $lang->mapDimensions();
         $MyFile=$lang->name.".txt";
@@ -184,6 +279,9 @@
         echo $code;
 	    }
 	    }
+	    /*
+	     * Main class object to call the load() method;
+	     * */
 	    $main=new Main();
 	    $main->load();
         ?>
