@@ -12,7 +12,7 @@ if (strlen($q)>0) {
 		{
 		if($dim==1)
 		{
-			echo '<select name="dropdown" onchange="getData(this.value,'.$id.')">
+			echo '<select name="dropdown" onchange="setData(this.value,'.$id.')">
 			      <option value="">-- Select --</option>
                   <option value="int*">int* '.$name.' </option>
                   <option value="int[]">int '.$name. '[]</option>
@@ -20,7 +20,7 @@ if (strlen($q)>0) {
 		}
 		if($dim==2)
 		{
-			echo '<select name="dropdown" onchange="getData(this.value,'.$id.')">
+			echo '<select name="dropdown" onchange="setData(this.value,'.$id.')">
 			      <option value="">-- Select --</option>
                   <option value="int**">int** '.$name.' </option>
                   </select>';
@@ -30,16 +30,16 @@ if (strlen($q)>0) {
 	    {
 			if($dim==1)
 		    {
-			echo '<select name="dropdown" onchange="getData(this.value,'.$id.')">
+			echo '<select name="dropdown" onchange="setData(this.value,'.$id.')">
 			      <option value="">-- Select --</option>
                   <option value="int[]">int[] '.$name.' </option>
                   <option value="ArrayList">ArrayList '.$name. '</option>
-                  <option value="Set<Integer>">Set&ltInteger&gt '.$name. '</option>
+                  <option value="Set&lt;Integer&gt;">Set&ltInteger&gt '.$name. '</option>
                   </select>';
 		    }
 		    if($dim==2)
 		    {
-			echo '<select name="dropdown" onchange="getData(this.value,'.$id.')">
+			echo '<select name="dropdown" onchange="setData(this.value,'.$id.')">
 			      <option value="">-- Select --</option>
                   <option value="int[][]">int[][] '.$name.' </option>
                   </select>';
@@ -53,6 +53,4 @@ if ($hint=="") {
   $response=$hint;
 }
 
-//output the response
-//echo $response;
 ?>
