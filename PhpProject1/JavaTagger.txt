@@ -1,3 +1,5 @@
 Integer int
 Character char
-
+bool boolean
+arraylist ArrayList
+set<integer> Set&lt;Integer&gt;
