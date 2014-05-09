@@ -65,7 +65,7 @@
 			if(val=='Java')
 			{
 				html+=common;
-				html+='<tr><td>Name Of The Class:</td> <td ><input type="text" name="class_name"></td></tr>';
+				html+='<tr><td>Name Of The Class:</td> <td ><input type="text" name="class_name">&nbsp;*</td></tr>';
 				var container = document.getElementById("CLASS");
 				container.innerHTML=html;
 		    }
@@ -93,7 +93,7 @@
 			 var val=document.forms['input']['return_type'].value;
 			 if(val=="")
 			 {
-				alert("Return type can never be blank");
+				alert("Select Return type");
 				return false;
 			 }
 			 val=val.toLowerCase();
@@ -203,7 +203,13 @@
 			</tr>
 			<tr>
 				<td> Return Type:</td>
-				<td ><input type="text" name="return_type">&nbsp;*</td>
+				<td>
+					<select name="return_type" id="select">
+						<option value="">-Select return type-</option>
+						<option value="int">int</option>
+						<option value="char">char</option>
+					</select>&nbsp;*
+				</td>
 			</tr>
 			<tbody id="CLASS">
             </tbody>
