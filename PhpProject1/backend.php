@@ -81,31 +81,31 @@
             
             public function setReturnType($type)
             {
-				$this->return_type=$type;
-			}
+		$this->return_type=$type;
+	    }
 			/*
              * sets the string indicating parameters_type for each dimension like "*" or "[]" for 1 dimension and so on. 
              * 2-D array MapDimensions is used to map each dimension to several possibilities.
              * */
-			public function mapDimensions()
-			{
-				if($this->name=="C"||$this->name=="C++")
-				{
-					$this->MapDimensions[0][0]="";
-					$this->MapDimensions[1][0]="*";
-					$this->MapDimensions[1][1]="[]";
-					$this->MapDimensions[2][0]="**";
-				}
-				if($this->name=="Java")
-				{
-					$this->MapDimensions[0][0]="";
-					$this->MapDimensions[1][0]="[]";
-					$this->MapDimensions[1][1]="ArrayList";
-					$this->MapDimensions[1][2]="Set<Integer>";
-					$this->MapDimensions[2][0]="[][]";
-				}
+	    public function mapDimensions()
+	    {
+		if($this->name=="C"||$this->name=="C++")
+		{
+		    $this->MapDimensions[0][0]="";
+		    $this->MapDimensions[1][0]="*";
+		    $this->MapDimensions[1][1]="[]";
+		    $this->MapDimensions[2][0]="**";
+		}
+		if($this->name=="Java")
+		{
+		    $this->MapDimensions[0][0]="";
+		    $this->MapDimensions[1][0]="[]";
+		    $this->MapDimensions[1][1]="ArrayList";
+		    $this->MapDimensions[1][2]="Set<Integer>";
+		    $this->MapDimensions[2][0]="[][]";
+		}
 				
-			}
+	    }
 			/*
              * method to get the default code for any language that is taken through a file "lang_name.txt"
              * */
@@ -152,18 +152,18 @@
              
             public function getParameterTypes()
             {
-				$Map_parameters=array();
-				for($i=0;$i<count($this->parameters_type);$i++)
-				{
-					$dim=$this->dimensions[$i];
-					$string=$this->MapDimensions[$dim][0];
-					$str=$this->parameters_type[$i];
-					$str=strtolower($str);
-					$Map_parameters[$i]=$this->Map[$str];
-					$s=$Map_parameters[$i];
-					if((strncmp($s,'ArrayList',strlen('ArrayList'))!=0) && (strncmp($s,"Set&lt;Integer&gt;",strlen("Set&lt;Integer&gt;"))!=0))
-					$Map_parameters[$i]=$Map_parameters[$i].$string;
-				}
+		$Map_parameters=array();
+		for($i=0;$i<count($this->parameters_type);$i++)
+		{
+		    $dim=$this->dimensions[$i];
+		    $string=$this->MapDimensions[$dim][0];
+		    $str=$this->parameters_type[$i];
+		    $str=strtolower($str);
+		    $Map_parameters[$i]=$this->Map[$str];
+		    $s=$Map_parameters[$i];
+		    if((strncmp($s,'ArrayList',strlen('ArrayList'))!=0) && (strncmp($s,"Set&lt;Integer&gt;",strlen("Set&lt;Integer&gt;"))!=0))
+		    $Map_parameters[$i]=$Map_parameters[$i].$string;
+		}
                 return $Map_parameters;
             }
         }
@@ -191,15 +191,15 @@
              * */
             public function setinitialTag($MyFile)
             {
-			   $lines=file($MyFile);
+	       $lines=file($MyFile);
                for($i=0;$i<count($lines);$i++)
                {
 			     $str=explode(" ",$lines[$i]);
 			     $type=strtolower($str[0]);
 			     $tag=$str[1];
 			     $this->Map[$type]=$tag;
-		       }
-			}
+	       }
+	     }
 			
 			/*
              * method that replaces the string like CLASSNAME in default_code by 'class_name' given by the content_provider,
@@ -243,45 +243,45 @@
 		 * */
 		public function load()
 		{
-		if(isset($_POST['submit']))
-		{
-		$lang_name=$_POST['lang'];
-        $lang=new Language($lang_name);
-        $File=$lang_name."Tagger.txt";
-        $lang->setinitialTag($File);
-        $lang->mapDimensions();
-        $MyFile=$lang->name.".txt";
-        $lines=file($MyFile);
-        $code="";
-        for($i=0;$i<count($lines);$i++)
-        {
+		    if(isset($_POST['submit']))
+		    {
+		     $lang_name=$_POST['lang'];
+                     $lang=new Language($lang_name);
+                     $File=$lang_name."Tagger.txt";
+                     $lang->setinitialTag($File);
+                     $lang->mapDimensions();
+                     $MyFile=$lang->name.".txt";
+                     $lines=file($MyFile);
+                     $code="";
+                     for($i=0;$i<count($lines);$i++)
+                     {
 			$code=$code.$lines[$i];
 			$code=$code.'<br>';
-		}
-		$lang->setDefaultCode($code);
-        $lang->setClassName($_POST['class_name']);
-        $lang->setReturnType($_POST['return_type']);
-        $lang->setFunctionName($_POST['func_name']);
-        $number_of_arguments=$_POST['no_of_arguments'];
-        $parameters_name=array();
-        $parameters_type=array();
-        $dimensions=array();
-        for($i=0;$i<$number_of_arguments;$i++)
-        {
-            $val=$_POST['var_name'.$i];
-            $parameters_name[$i]=$val;
-            $val=$_POST['dim'.$i];
-            $dimensions[$i]=$val;
-            $val=$_POST['var_type'.$i];
-            $parameters_type[$i]=$val;
-        }
-        $lang->setParametersType($parameters_type);
-        $lang->setParametersName($parameters_name);
-        $lang->setDimensionofvariables($dimensions);
-        $code=$lang->generateSourceCode();
-        echo $code;
-	    }
-	    else $this->sendSuggestions();
+		     }
+		     $lang->setDefaultCode($code);
+                     $lang->setClassName($_POST['class_name']);
+                     $lang->setReturnType($_POST['return_type']);
+                     $lang->setFunctionName($_POST['func_name']);
+                     $number_of_arguments=$_POST['no_of_arguments'];
+                     $parameters_name=array();
+                     $parameters_type=array();
+                     $dimensions=array();
+                    for($i=0;$i<$number_of_arguments;$i++)
+                    {
+                      $val=$_POST['var_name'.$i];
+                      $parameters_name[$i]=$val;
+                      $val=$_POST['dim'.$i];
+                      $dimensions[$i]=$val;
+                      $val=$_POST['var_type'.$i];
+                      $parameters_type[$i]=$val;
+                    }
+                    $lang->setParametersType($parameters_type);
+                    $lang->setParametersName($parameters_name);
+                    $lang->setDimensionofvariables($dimensions);
+                    $code=$lang->generateSourceCode();
+                    echo $code;
+	          }
+	          else $this->sendSuggestions();
 	    }
 	    /*
 	 * function that send the suggestion to the frontend using the value of the dimension the variable,language
@@ -293,15 +293,15 @@
 	 /* few variable that stores the value send by input.html through post method
       * stores the name of the arguments,its dimensions for which we have to display suggestions
       */
-     $name=$_POST["name"];
-     $q=$_POST['str'];
-     $dim=$_POST['dim'];
-     $type=$_POST['type'];
-     $lang=$_POST['lang'];
-     $id=$_POST['id'];
-     $type=strtolower($type);
-     //if length of typed string is greater tha zero
-      if(strlen($q)>0){
+          $name=$_POST["name"];
+          $q=$_POST['str'];
+          $dim=$_POST['dim'];
+          $type=$_POST['type'];
+          $lang=$_POST['lang'];
+          $id=$_POST['id'];
+          $type=strtolower($type);
+          //if length of typed string is greater tha zero
+          if(strlen($q)>0){
 		if($lang=="C")
 		{
 		if($dim==1)
@@ -319,10 +319,10 @@
                   <option value="int**">int** '.$name.' </option>
                   </select>';
 		}
-	    }
+	        }
 	    if($lang=="Java")
 	    {
-			if($dim==1)
+		    if($dim==1)
 		    {
 			echo '<select name="dropdown" onchange="setData(this.value,'.$id.')">
 			      <option value="">-- Select --</option>
@@ -338,10 +338,10 @@
                   <option value="int[][]">int[][] '.$name.' </option>
                   </select>';
 		    }
-		}	
-      }
-     }
-	    }
+	    }	
+          }
+        }
+	 }
 	    /*
 	     * Main class object to call the load() method;
 	     * */
