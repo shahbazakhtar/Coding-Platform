@@ -4,3 +4,7 @@ int int
 character char
 integer int
 char char
+char* char
+char[] char
+char[][] char
+char** char
