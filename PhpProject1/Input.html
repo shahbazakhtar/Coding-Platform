@@ -107,6 +107,11 @@
 				 alert("Function name can never be blank");
 				 return false;
 			 }
+			 if(val[0]>='0'&&val[0]<='9')
+			 {
+				 alert("Function name cannot start with digit");
+				 return false;
+			 }
 			 var val=document.forms['input']['return_type'].value;
 			 if(val=="")
 			 {
@@ -122,6 +127,11 @@
 				alert("class name can never be blank");
 				return false;
 			 }
+			 if(val[0]>='0'&&val[0]<='9')
+			 {
+				 alert("Class name cannot start with digit");
+				 return false;
+			 }
 		     }
 			 var val=document.forms['input']['no_of_arguments'].value; 
 			 for(i=0;i<val;i++)
@@ -131,6 +141,12 @@
 				if(val1=="")
 			    {
 				alert("Please enter the name of variable"+(i+1));
+				return false;
+			    }
+			    var val1=document.forms['input']['var_name'+i].value;
+				if(val1[0]>='0'&&val1[0]<='9')
+			    {
+				alert("Name of variable"+(i+1)+" cannot start with digit");
 				return false;
 			    }
 			    var val1=document.forms['input']['dim'+i].value;
@@ -145,7 +161,9 @@
 				alert("Please enter the type of variable"+(i+1));
 				return false;
 			    }
-                var array =["int","int[][]","int*","int[]","int**","integer","Integer","Character","character","char","ArrayList","Set<Integer>","ArrayList<ArrayList<Integer>>"];
+			    if(lang=="C")
+			    {
+                var array =["int","int*","int[]","int**","integer","Integer","Character","character","char","char*","char**","char[]"];
                 var flag=0;
                 for(j=0;j<array.length;j++) { 
                     if(val1==array[j])
@@ -155,6 +173,21 @@
                 {
 					alert("Sorry !!! The type of variable"+(i+1)+" cannot be "+val1);
 				    return false;
+				}
+			    }
+			    if(lang=="Java")
+			    {
+					var array=["int","char","integer","character","int[][]","string","String","char[]","char[][]","int[]","ArrayList","Set<Integer>","ArrayList<ArrayList<Integer>>"];
+					var flag=0;
+                     for(j=0;j<array.length;j++) { 
+                     if(val1==array[j])
+                     flag=1;
+                     }
+                     if(flag==0)
+                     {
+					  alert("Sorry !!! The type of variable"+(i+1)+" cannot be "+val1);
+				      return false;
+				     }
 				}
 			 }
 		}
