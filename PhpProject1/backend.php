@@ -81,8 +81,8 @@
             
             public function setReturnType($type)
             {
-				$this->return_type=$type;
-			}
+		$this->return_type=$type;
+	    }
 			/*
              * sets the string indicating parameters_type for each dimension like "*" or "[]" for 1 dimension and so on. 
              * 2-D array MapDimensions is used to map each dimension to several possibilities.
@@ -164,7 +164,7 @@
 					if((strncmp($s,'ArrayList',strlen('ArrayList'))!=0)&&strncmp($s,'ArrayList&lt;ArrayList&lt;Integer&gt;&gt;',strlen('ArrayList&lt;ArrayList&lt;Integer&gt;&gt;'))!=0 && (strncmp($s,"Set&lt;Integer&gt;",strlen("Set&lt;Integer&gt;"))!=0))
 					$Map_parameters[$i]=$Map_parameters[$i].$string;
 				}
-                return $Map_parameters;
+                               return $Map_parameters;
             }
         }
         /*
@@ -191,15 +191,15 @@
              * */
             public function setinitialTag($MyFile)
             {
-			   $lines=file($MyFile);
+	       $lines=file($MyFile);
                for($i=0;$i<count($lines);$i++)
                {
 			     $str=explode(" ",$lines[$i]);
 			     $type=strtolower($str[0]);
 			     $tag=$str[1];
 			     $this->Map[$type]=$tag;
-		       }
-			}
+	       }
+	    }
 			
 			/*
              * method that replaces the string like CLASSNAME in default_code by 'class_name' given by the content_provider,
@@ -245,59 +245,59 @@
 		{
 		if(isset($_POST['submit'])) // check if the value has come through POST method by submit button or not
 		{
-		$lang_name=$_POST['lang'];
-        $lang=new Language($lang_name);
-        $File=$lang_name."Tagger.txt";
-        $lang->setinitialTag($File);
-        $lang->mapDimensions();
-        $MyFile=$lang->name.".txt";
-        $lines=file($MyFile);
-        $code="";
-        for($i=0;$i<count($lines);$i++)
-        {
+		     $lang_name=$_POST['lang'];
+                     $lang=new Language($lang_name);
+                     $File=$lang_name."Tagger.txt";
+                     $lang->setinitialTag($File);
+                     $lang->mapDimensions();
+                     $MyFile=$lang->name.".txt";
+                     $lines=file($MyFile);
+                     $code="";
+                     for($i=0;$i<count($lines);$i++)
+                     {
 			$code=$code.$lines[$i];
 			$code=$code.'<br>';
-		}
-		$lang->setDefaultCode($code);
-        $lang->setClassName($_POST['class_name']);
-        $lang->setReturnType($_POST['return_type']);
-        $lang->setFunctionName($_POST['func_name']);
-        $number_of_arguments=$_POST['no_of_arguments'];
-        $parameters_name=array();
-        $parameters_type=array();
-        $dimensions=array();
-        for($i=0;$i<$number_of_arguments;$i++)
-        {
-            $val=$_POST['var_name'.$i];
-            $parameters_name[$i]=$val;
-            $val=$_POST['dim'.$i];
-            $dimensions[$i]=$val;
-            $val=$_POST['var_type'.$i];
-            if($lang_name=="C"&&$val=="int[]")
-            {
+		     }
+		     $lang->setDefaultCode($code);
+                     $lang->setClassName($_POST['class_name']);
+                     $lang->setReturnType($_POST['return_type']);
+                     $lang->setFunctionName($_POST['func_name']);
+                     $number_of_arguments=$_POST['no_of_arguments'];
+                     $parameters_name=array();
+                     $parameters_type=array();
+                     $dimensions=array();
+                     for($i=0;$i<$number_of_arguments;$i++)
+                     {
+                     $val=$_POST['var_name'.$i];
+                     $parameters_name[$i]=$val;
+                     $val=$_POST['dim'.$i];
+                     $dimensions[$i]=$val;
+                     $val=$_POST['var_type'.$i];
+                     if($lang_name=="C"&&$val=="int[]")
+                     {
 				$val="integer";
 				$parameters_name[$i]=$parameters_name[$i].'[]';
 				$dimensions[$i]=0;
-			}
-			if($lang_name=="C"&&$val=="char[]")
-            {
+		     }
+		     if($lang_name=="C"&&$val=="char[]")
+                     {
 				$val="character";
 				$parameters_name[$i]=$parameters_name[$i].'[]';
 				$dimensions[$i]=0;
-			}
-			if($lang_name=="Java"&&$val=="int[]")
-			{
-				$val="integer";
-			}
-			if($val=="int*"||$val=="int**")
+		     }
+		     if($lang_name=="Java"&&$val=="int[]")
+		     {
 			$val="integer";
-            $parameters_type[$i]=$val;
-        }
-        $lang->setParametersType($parameters_type);
-        $lang->setParametersName($parameters_name);
-        $lang->setDimensionofvariables($dimensions);
-        $code=$lang->generateSourceCode();
-        echo $code;
+		     }
+		     if($val=="int*"||$val=="int**")
+		     $val="integer";
+                     $parameters_type[$i]=$val;
+                     }
+                    $lang->setParametersType($parameters_type);
+                    $lang->setParametersName($parameters_name);
+                    $lang->setDimensionofvariables($dimensions);
+                    $code=$lang->generateSourceCode();
+                    echo $code;
 	    }
 	    else $this->sendSuggestions(); // if the data has not come through "submit" button then we have to send suggestions.
 	    }
@@ -311,15 +311,15 @@
 	 /* few variable that stores the value send by input.html through post method
       * stores the name of the arguments,its dimensions for which we have to display suggestions
       */
-     $name=$_POST["name"];
-     $q=$_POST['str'];
-     $dim=$_POST['dim'];
-     $type=$_POST['type'];
-     $lang=$_POST['lang'];
-     $id=$_POST['id'];
-     $type=strtolower($type);
+            $name=$_POST["name"];
+            $q=$_POST['str'];
+            $dim=$_POST['dim'];
+            $type=$_POST['type'];
+            $lang=$_POST['lang'];
+            $id=$_POST['id'];
+            $type=strtolower($type);
      //if length of typed string is greater than zero
-      if(strlen($q)>0){
+            if(strlen($q)>0){
 		if($lang=="C")
 		{
 		if($dim==1)
@@ -335,62 +335,62 @@
 			         {
 						 $str=$name.'[]';
 						 echo '<option value="'.$s.'">int '.$str.' </option>';
-					 }
-					 else if((strncmp($s,"char[]",strlen("char[]")))==0)
+			         }
+			         else if((strncmp($s,"char[]",strlen("char[]")))==0)
 			         {
-						 $str=$name.'[]'; 
-						 echo '<option value="'.$s.'">char '.$str.' </option>';
-					 }
-					 else echo '<option value="'.$s.'">'.$s.' '.$name.' </option>';
-		          }
-                  echo '</select>';
+				     $str=$name.'[]'; 
+				     echo '<option value="'.$s.'">char '.$str.' </option>';
+				 }
+			         else echo '<option value="'.$s.'">'.$s.' '.$name.' </option>';
+		   }
+                   echo '</select>';
 		}
 		if($dim==2)
 		{
 			echo '<select name="dropdown" onchange="setData(this.value,'.$id.')">
 			      <option value="">-- Select --</option>';
 			      $MyFile=$lang."suggestiondim2.txt";
-                  $lines=file($MyFile);
-                  for($i=0;$i<count($lines);$i++)
-                  {
+                        $lines=file($MyFile);
+                         for($i=0;$i<count($lines);$i++)
+                         {
 			         $s=$lines[$i];
 			         echo '<option value="'.$s.'">'.$s.' '.$name.' </option>';
-		          }
-                  echo '</select>';
+		         }
+                        echo '</select>';
 		}
-	    }
+	      }
 	    if($lang=="Java")
 	    {
-			if($dim==1)
+		    if($dim==1)
 		    {
 			  echo '<select name="dropdown" onchange="setData(this.value,'.$id.')">
 			      <option value="">-- Select --</option>';
 			      $MyFile=$lang."suggestiondim1.txt";
-                  $lines=file($MyFile);
-                  for($i=0;$i<count($lines);$i++)
-                  {
+                          $lines=file($MyFile);
+                          for($i=0;$i<count($lines);$i++)
+                          {
 			         $s=$lines[$i];
 			         echo '<option value="'.$s.'">'.$s.' '.$name.' </option>';
 		          }
-                  echo '</select>';
+                          echo '</select>';
 		    }
 		    if($dim==2)
 		    {
 			echo '<select name="dropdown" onchange="setData(this.value,'.$id.')">
 			      <option value="">-- Select --</option>';
 			      $MyFile=$lang."suggestiondim2.txt";
-                  $lines=file($MyFile);
-                  for($i=0;$i<count($lines);$i++)
-                  {
+                              $lines=file($MyFile);
+                          for($i=0;$i<count($lines);$i++)
+                          {
 			         $s=$lines[$i];
 			         echo '<option value="'.$s.'">'.$s.' '.$name.' </option>';
 		          }
-                  echo '</select>';
+                        echo '</select>';
 		    }
-		}	
+	    }	
       }
-     }
-	    }
+      }
+	}
 	    /*
 	     * Main class object to call the load() method;
 	     * */
