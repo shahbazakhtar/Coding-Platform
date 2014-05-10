@@ -25,7 +25,10 @@
 		}
 		/*
 		 displaysuggestion of variable_type depending on the value of dimension of variables
+		 @param--- str=string typed by the user in the variable_type text field
+		          id=index of the variable for which user is entrying the value
 		*/
+		
 		function displaysuggestion(str,id)
 		{
 			 if (str.length==0) { 
@@ -33,7 +36,7 @@
                           document.getElementById("livesearch"+id).style.border="0px";
                           return;
                         }
-                   if (window.XMLHttpRequest) {
+                    if (window.XMLHttpRequest) {
                   // code for IE7+, Firefox, Chrome, Opera, Safari
                     xmlhttp=new XMLHttpRequest();
                    } else {  // code for IE6, IE5
@@ -57,6 +60,8 @@
 		}
 		/*
 		 sets the value of the variable_type in the textfield using the suggestion selected by the user
+		 @param--- val=value selected by the user from the drop down menu of suggestions
+		           id=index of the variable for which user is entrying the value
 		*/
 
 		function setData(val,id)
@@ -65,8 +70,8 @@
 
 		}
 		/*
-		  generates the textfield of the name of class when java language is selected
-		  the function is called by onchange event on the language list
+		  generates the textfield of the "name of class" when java language is selected
+		  the function is called by onchange event on the language list.
 		*/
 		function func()
 		{
@@ -79,9 +84,9 @@
 				html+='<tr><td>Name Of The Class:</td> <td ><input type="text" name="class_name">&nbsp;*</td></tr>';
 				var container = document.getElementById("CLASS");
 				container.innerHTML=html;
-		    }
+		        }
 		        if(val!='Java')
-			    {
+			{
 				var html='';
 				var container = document.getElementById("CLASS");
 				container.innerHTML=html;
@@ -132,63 +137,65 @@
 				 alert("Class name cannot start with digit");
 				 return false;
 			 }
-		     }
+		         }
+		         
 			 var val=document.forms['input']['no_of_arguments'].value; 
 			 for(i=0;i<val;i++)
 			 {
 				
-				var val1=document.forms['input']['var_name'+i].value;
-				if(val1=="")
+			    var val1=document.forms['input']['var_name'+i].value;
+			    if(val1=="")
 			    {
 				alert("Please enter the name of variable"+(i+1));
 				return false;
 			    }
 			    var val1=document.forms['input']['var_name'+i].value;
-				if(val1[0]>='0'&&val1[0]<='9')
+			    if(val1[0]>='0'&&val1[0]<='9')
 			    {
 				alert("Name of variable"+(i+1)+" cannot start with digit");
 				return false;
 			    }
 			    var val1=document.forms['input']['dim'+i].value;
-				if(val1=="select")
+			    if(val1=="select")
 			    {
 				alert("Please select the dimension of variable"+(i+1));
 				return false;
 			    }
 			    var val1=document.forms['input']['var_type'+i].value;
-				if(val1=="")
+			    if(val1=="")
 			    {
 				alert("Please enter the type of variable"+(i+1));
 				return false;
 			    }
+			    
 			    if(lang=="C")
 			    {
-                var array =["int","int*","int[]","int**","integer","Integer","Character","character","char","char*","char**","char[]"];
-                var flag=0;
-                for(j=0;j<array.length;j++) { 
-                    if(val1==array[j])
-                    flag=1;
-                }
-                if(flag==0)
-                {
-					alert("Sorry !!! The type of variable"+(i+1)+" cannot be "+val1);
+                            var array =["int","int*","int[]","int**","integer","Integer","Character","character","char","char*","char**","char[]"];
+                            var flag=0;
+                            for(j=0;j<array.length;j++) { 
+                            if(val1==array[j])
+                             flag=1;
+                            }
+                            if(flag==0)
+                            {
+				    alert("Sorry !!! The type of variable"+(i+1)+" cannot be "+val1);
 				    return false;
-				}
+			    }
 			    }
 			    if(lang=="Java")
 			    {
-					var array=["int","char","integer","character","int[][]","string","String","char[]","char[][]","int[]","ArrayList","Set<Integer>","ArrayList<ArrayList<Integer>>"];
-					var flag=0;
-                     for(j=0;j<array.length;j++) { 
-                     if(val1==array[j])
-                     flag=1;
-                     }
-                     if(flag==0)
-                     {
-					  alert("Sorry !!! The type of variable"+(i+1)+" cannot be "+val1);
+				var array=["int","char","integer","character","int[][]","string","String","char[]","char[][]","int[]","ArrayList","Set<Integer>","ArrayList<ArrayList<Integer>>"];
+				var flag=0;
+                                for(j=0;j<array.length;j++) { 
+                                if(val1==array[j])
+                                flag=1;
+                                 }
+                               if(flag==0)
+                               {
+			              alert("Sorry !!! The type of variable"+(i+1)+" cannot be "+val1);
 				      return false;
-				     }
-				}
+			       }
+			    }
 			 }
 		}
 </script>
