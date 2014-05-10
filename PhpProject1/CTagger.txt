@@ -1,3 +1,5 @@
 Integer int
 Character char
-
+int int
+character char
+integer int
