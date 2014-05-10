@@ -4,4 +4,6 @@ bool boolean
 int[][] int
 arraylist ArrayList
 set<integer> Set&lt;Integer&gt;
-arraylist<arraylist<integer>> ArrayList&lt;ArrayList&lt;Integer&gt;&gt; 
+arraylist<arraylist<integer>> ArrayList&lt;ArrayList&lt;Integer&gt;&gt;
+char char
+int int 
