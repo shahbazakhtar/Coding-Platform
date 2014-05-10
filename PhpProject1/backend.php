@@ -279,6 +279,12 @@
 				$parameters_name[$i]=$parameters_name[$i].'[]';
 				$dimensions[$i]=0;
 			}
+			if($lang_name=="C"&&$val=="char[]")
+            {
+				$val="character";
+				$parameters_name[$i]=$parameters_name[$i].'[]';
+				$dimensions[$i]=0;
+			}
 			if($lang_name=="Java"&&$val=="int[]")
 			{
 				$val="integer";
@@ -325,10 +331,15 @@
                   for($i=0;$i<count($lines);$i++)
                   {
 			         $s=$lines[$i];
-			         if(strncmp($s,"int[]",strlen("int[]"))==0)
+			         if((strncmp($s,"int[]",strlen("int[]")))==0)
 			         {
-						 $name=$name.'[]';
-						 echo '<option value="'.$s.'">int '.$name.' </option>';
+						 $str=$name.'[]';
+						 echo '<option value="'.$s.'">int '.$str.' </option>';
+					 }
+					 else if((strncmp($s,"char[]",strlen("char[]")))==0)
+			         {
+						 $str=$name.'[]'; 
+						 echo '<option value="'.$s.'">char '.$str.' </option>';
 					 }
 					 else echo '<option value="'.$s.'">'.$s.' '.$name.' </option>';
 		          }
