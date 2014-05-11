@@ -1,10 +1,14 @@
-Integer int
-Character char
-bool boolean
-int[][] int
-arraylist ArrayList
-set<integer> Set&lt;Integer&gt;
-arraylist<arraylist<integer>> ArrayList&lt;ArrayList&lt;Integer&gt;&gt;
-char char
-int int
-string String
+Integer 0 int
+integer 1 int[]
+integer 2 int[][]
+Character 0 char
+bool 0 boolean
+int[][] 2 int[][]
+int[] 1 int[]
+arraylist 1 ArrayList
+set<integer> 1 Set&lt;Integer&gt;
+arraylist<arraylist<integer>> 2 ArrayList&lt;ArrayList&lt;Integer&gt;&gt;
+char 0 char
+int 0 int
+string 0 String
+vector<integer> 1 Vector&lt;Integer&gt;
