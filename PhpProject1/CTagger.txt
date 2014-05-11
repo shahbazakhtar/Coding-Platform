@@ -1,10 +1,23 @@
-Integer int
-Character char
-int int
-character char
-integer int
-char char
-char* char
-char[] char
-char[][] char
-char** char
+Integer 0 int
+Character 0 char
+int 0 int
+character 0 char
+integer 0 int
+integer 1 int*
+integer 2 int**
+character 1 char*
+character 2 char**
+char 0 char
+char 1 char*
+char[] 1 char
+char[][] 1 char
+int[] 1 int
+int[][] 2 int
+char 1 char**
+int 1 int*
+int 2 int**
+char 2 char**
+int* 1 int*
+int** 2 int**
+char* 1 char*
+char** 2 char**
